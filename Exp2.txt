@@ -1,0 +1,263 @@
+# docker container start -i myHadoop
+
+# hdfs dfs -ls /TeacherDetail
+
+## hdfs dfs -rm -r /TeacherDetail/Result
+# hive;
+1. CREATE DATABASE IF NOT EXISTS education_db;
+2. USE education_db;
+
+3. CREATE TABLE IF NOT EXISTS education_db.student_results (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING
+)
+PARTITIONED BY (exam_year INT, exam_session STRING)
+STORED AS PARQUET
+LOCATION '/TeacherDetail/Result';
+
+4.CREATE TABLE IF NOT EXISTS education_db.result_tmp (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING,
+    exam_year INT,
+    exam_session STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION '/TeacherDetail/Result_tmp';
+
+# Make student_results.csv file
+
+5.docker cp "C:\Users\User\Desktop\DDBMS Lab\student_results.csv" myHadoop:/home/hadoop (powershell)
+
+6. LOAD DATA LOCAL INPATH '/home/hadoop/student_results.csv'
+   INTO TABLE education_db.result_tmp;
+
+7.SET hive.exec.dynamic.partition = true;
+  SET hive.exec.dynamic.partition.mode = nonstrict;
+
+INSERT OVERWRITE TABLE education_db.student_results
+PARTITION (exam_year, exam_session)
+SELECT
+student_id,
+subject_code,
+marks,
+grade,
+exam_year,
+exam_session
+FROM education_db.result_tmp;
+# MSCK REPAIR TABLE education_db.student_results;
+# SHOW PARTITIONS education_db.student_results;
+8. SHOW PARTITIONS student_results;
+9. select* from student_results;
+
+# Drop a Partition (2022, 'Fall');
+
+ALTER TABLE education_db.student_results
+DROP PARTITION (exam_year=2022, exam_session='Fall');
+
+* SHOW PARTITIONS education_db.student_results;
+
+# Repair table
+
+MSCK REPAIR TABLE education_db.student_results;
+
+
+# Insert Data into a Specific Partition (2024, 'Spring')
+
+INSERT INTO TABLE education_db.student_results
+PARTITION (exam_year=2024, exam_session='Spring')
+VALUES
+(333, 'C028', 76, 'B'),
+(888, 'C026', 82, 'B'),
+(555, 'C021', 37, 'F');
+
+Verify: SELECT *
+FROM education_db.student_results
+WHERE exam_year=2024 AND exam_session='Spring';
+
+#  Add a New Partition (2025, 'Spring')
+ALTER TABLE education_db.student_results
+ADD PARTITION (exam_year=2025, exam_session='Spring')
+LOCATION '/TeacherDetail/Result/2025/Spring';
+
+
+* SHOW PARTITIONS education_db.student_results;
+
+# Query with Partition Filtering (2023, 'Fall')
+
+SELECT
+    sr.student_id,
+    s.student_name,
+    s.dob,
+    s.department,
+    sr.subject_code,
+    sr.marks,
+    sr.grade,
+    sr.exam_year,
+    sr.exam_session
+FROM student_results sr
+JOIN students s ON sr.student_id = s.student_id
+WHERE sr.exam_year=2023 AND sr.exam_session='Fall';
+
+
+-------------------------------------------------------------
+Q1 — Database & Table Creation
+
+-- 1.a) Create Database
+
+CREATE DATABASE IF NOT EXISTS education_db;
+
+-- 1.b) Create Partitioned Table
+
+USE education_db;
+
+CREATE TABLE IF NOT EXISTS student_results (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING
+)
+PARTITIONED BY (exam_year INT, exam_session STRING)
+STORED AS PARQUET
+LOCATION '/TeacherDetail/Result';
+
+Q2 — Bulk Data Insertion via Temporary Table
+
+-- 2.a) Create Temporary Table
+CREATE TABLE IF NOT EXISTS result_tmp (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING,
+    exam_year INT,
+    exam_session STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+-- 2.b) Load Data from CSV
+LOAD DATA LOCAL INPATH '/test/student_results.csv' 
+INTO TABLE result_tmp;
+
+-- 2.c) Insert into Partitioned Table
+SET hive.exec.dynamic.partition = true;
+SET hive.exec.dynamic.partition.mode = nonstrict;
+
+INSERT OVERWRITE TABLE student_results 
+PARTITION (exam_year, exam_session)
+SELECT student_id, subject_code, marks, grade, exam_year, exam_session 
+FROM result_tmp;
+
+-- 2.d) Drop Temporary Table
+DROP TABLE result_tmp;
+
+Q3 — Add a New Partition
+
+-- 3.a) Add Partition
+ALTER TABLE student_results
+ADD PARTITION (exam_year=2025, exam_session='Spring')
+LOCATION '/TeacherDetail/Result/2025/Spring';
+
+-- 3.b) Verify Partition
+SHOW PARTITIONS student_results;
+
+Q4 — Data Insertion into Specific Partition
+
+-- 4.a) Insert Records
+INSERT INTO TABLE student_results
+PARTITION (exam_year=2024, exam_session='Spring')
+VALUES
+    (101, 'MATH101', 85, 'A'),
+    (102, 'ENG201', 78, 'B'),
+    (103, 'CS105', 92, 'A');
+
+-- 4.b) Verify Insertion
+SELECT * 
+FROM student_results 
+WHERE exam_year=2024 AND exam_session='Spring';
+
+Q5 — Drop Partition
+-- 5.a) Drop Partition
+ALTER TABLE student_results
+DROP PARTITION (exam_year=2022, exam_session='Fall');
+
+-- 5.b) Verify Partitions
+SHOW PARTITIONS student_results;
+
+-- 5.c) Repair Table (if needed)
+MSCK REPAIR TABLE student_results;
+
+Q6 — Query with Partition Filtering
+SELECT
+    sr.student_id,
+    s.student_name,
+    s.dob,
+    s.department,
+    sr.subject_code,
+    sr.marks,
+    sr.grade,
+    sr.exam_year,
+    sr.exam_session
+FROM student_results sr
+JOIN students s ON sr.student_id = s.student_id
+WHERE sr.exam_year=2023 AND sr.exam_session='Fall';
+
+Q7 — Create Additional Tables (Students & Courses)
+-- Create students table
+CREATE TABLE IF NOT EXISTS students (
+    student_id INT,
+    student_name STRING,
+    dob STRING,
+    department STRING
+) STORED AS PARQUET;
+
+-- Create courses table
+CREATE TABLE IF NOT EXISTS courses (
+    course_id INT,
+    course_name STRING,
+    credits INT,
+    department STRING
+) STORED AS PARQUET;
+
+Q8 — Join Query
+
+SELECT
+    s.student_name,
+    c.course_name,
+    sr.marks
+FROM student_results sr
+JOIN students s ON sr.student_id = s.student_id
+JOIN courses c ON sr.subject_code = CAST(c.course_id AS STRING)
+WHERE s.department = 'Computer Science';
+
+Q9 — Aggregation Query
+
+SELECT
+    s.department,
+    AVG(sr.marks) AS avg_marks
+FROM student_results sr
+JOIN students s ON sr.student_id = s.student_id
+WHERE sr.exam_year = 2024
+GROUP BY s.department;
+
+Q10 — Top Scorer Query (Bonus)
+
+WITH max_marks_cte AS (
+    SELECT MAX(marks) AS max_marks
+    FROM student_results
+    WHERE exam_year = 2024 AND exam_session = 'Spring'
+)
+SELECT
+    sr.student_id,
+    s.student_name,
+    sr.subject_code,
+    sr.marks
+FROM student_results sr
+JOIN max_marks_cte mm ON sr.marks = mm.max_marks
+JOIN students s ON sr.student_id = s.student_id
+WHERE sr.exam_year = 2024 AND sr.exam_session = 'Spring';

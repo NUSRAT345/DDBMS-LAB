@@ -1,0 +1,78 @@
+# docker run hello-world
+1.docker pull macio232/hadoop-pseudo-distributed-mode
+2.docker run -p 9870:9870 -p 8088:8088 -it --name myHadoop macio232/hadoop-pseudo-distributed-mode /etc/bootstrap.sh -bash
+2. docker container start -i myHadoop
+3. hdfs dfs -ls /
+4. hdfs dfs -mkdir -p /TeacherDetail
+5. hdfs dfs -mkdir -p /TeacherDetail/department
+6. hdfs dfs -mkdir -p /TeacherDetail/teacher
+7. hdfs dfs -mkdir -p /TeacherDetail/course
+8. hdfs dfs -ls /TeacherDetail
+### hive
+9. show databases;
+10. CREATE DATABASE IF NOT EXISTS TeacherInfo;
+
+USE TeacherInfo;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS Department (
+    Dept_id INT,
+    Dept_Name STRING,
+    Building STRING
+)
+COMMENT 'Dept_Details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','  -- Changed from semicolon to comma (or your preferred delimiter)
+STORED AS TEXTFILE
+LOCATION '/TeacherDetail/department';
+
+11.CREATE EXTERNAL TABLE IF NOT EXISTS Teacher (
+    Teacher_id INT,
+    Teacher_Name STRING,
+    Email STRING,
+    Dept_id INT
+)
+COMMENT 'Teacher_Details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','  -- Fixed typo in "TERMINATED" and added quotes around delimiter
+STORED AS TEXTFILE
+LOCATION '/TeacherDetail/teacher';
+
+12. CREATE EXTERNAL TABLE IF NOT EXISTS Courses (
+    course_id INT,
+    course_name STRING,
+    credit INT,
+    dept_id INT,
+    teacher_id INT
+)
+COMMENT 'Course information'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/TeacherDetail/course';
+
+13. USE TeacherInfo;
+14. SHOW TABLES;
+
+15. docker cp "C:\Users\User\Desktop\DDBMS Lab\dept_data.csv" myHadoop:/home/hadoop/ (powershell)
+
+16. docker cp "C:\Users\User\Desktop\DDBMS Lab\teacher_data.csv" myHadoop:/home/hadoop/ (powershell)
+
+17. docker cp "C:\Users\User\Desktop\DDBMS Lab\course_data.csv" myHadoop:/home/hadoop/ (powershell)
+
+18. hive> LOAD DATA LOCAL INPATH '/home/hadoop/teacher_data.csv'
+     INTO TABLE TeacherInfo.Teacher;
+19. hive> LOAD DATA LOCAL INPATH '/home/hadoop/course_data.csv'
+     INTO TABLE TeacherInfo.courses;
+
+20. hive> LOAD DATA LOCAL INPATH '/home/hadoop/dept_data.csv'
+     INTO TABLE TeacherInfo.Department;
+
+QURIES:
+
+1. SHOW TABLES IN TeacherInfo;
+View table structure:
+2.DESCRIBE FORMATTED TeacherInfo.Teacher;
+## desc TeacherInfo.Teacher;
+3. SELECT * FROM TeacherInfo.Teacher;
+4. SELECT * FROM TeacherInfo.Department;
+5.SELECT * FROM TeacherInfo.courses;

@@ -1,0 +1,186 @@
+localhost:9870
+# docker container start -i myHadoop
+
+3. hdfs dfs -ls /
+4. hdfs dfs -mkdir -p /TeacherDetail
+# hive
+
+Q1 — Database & Table Creation:
+
+1. show databases;
+2. CREATE DATABASE IF NOT EXISTS education_db;
+3. USE education_db;
+
+5. CREATE TABLE IF NOT EXISTS education_db.student_results (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING
+)
+PARTITIONED BY (exam_year INT, exam_session STRING)
+STORED AS PARQUET
+LOCATION '/TeacherDetail/Result';
+
+Q2 — Bulk Data Insertion via Temporary Table
+
+6. CREATE TABLE IF NOT EXISTS education_db.result_tmp (
+    student_id INT,
+    subject_code STRING,
+    marks INT,
+    grade STRING,
+    exam_year INT,
+    exam_session STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION '/TeacherDetail/Result_tmp';
+
+# Make student_results.csv file
+
+-> docker cp "C:\Users\User\Desktop\DDBMS Lab\student_results.csv" myHadoop:/home/Hadoop
+
+-> LOAD DATA LOCAL INPATH '/home/hadoop/student_results.csv' INTO TABLE education_db.result_tmp;
+
+7. SET hive.exec.dynamic.partition = true;
+  SET hive.exec.dynamic.partition.mode = nonstrict;
+
+8. INSERT OVERWRITE TABLE education_db.student_results
+PARTITION (exam_year, exam_session)
+SELECT student_id, subject_code, marks, grade, exam_year, exam_session
+FROM education_db.result_tmp;
+
+# DROP TABLE education_db.result_tmp;
+
+# show partitions student_results;
+
+Q3 — Add a New Partition
+
+1. ALTER TABLE education_db.student_results
+ADD PARTITION (exam_year=2025, exam_session='Spring')
+LOCATION '/TeacherDetail/Result';
+
+2. SHOW PARTITIONS student_results;
+
+Q4 — Insert Data into a Specific Partition
+
+1. INSERT INTO TABLE education_db.student_results
+PARTITION (exam_year=2024, exam_session='Spring')
+VALUES
+(333, 'C028', 76, 'B'),
+(888, 'C026', 82, 'B'),
+(555, 'C021', 37, 'F');
+
+2.Verify: 
+
+SELECT *
+FROM education_db.student_results
+WHERE exam_year=2024 AND exam_session='Spring';
+
+Q5 — Drop a Partition
+
+1. ALTER TABLE education_db.student_results
+DROP PARTITION (exam_year=2022, exam_session='Fall');
+
+2. SHOW PARTITIONS student_results;
+
+3.MSCK REPAIR TABLE education_db.student_results;
+
+Q6 — Query with Partition Filtering
+
+1. USE education_db;
+
+2. CREATE TABLE IF NOT EXISTS students (
+    student_id INT,
+    student_name STRING,
+    dob STRING,
+    department STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/TeacherDetail/students';
+
+3. docker cp "C:\Users\User\Desktop\DDBMS Lab\students.csv" MyHadoop:/home/Hadoop
+
+4. LOAD DATA LOCAL INPATH '/home/hadoop/students.csv' INTO TABLE students;
+
+5. SELECT
+    sr.student_id,
+    s.student_name,
+    s.dob,
+    s.department,
+    sr.subject_code,
+    sr.marks,
+    sr.grade,
+    sr.exam_year,
+    sr.exam_session
+FROM student_results sr
+JOIN students s ON sr.student_id = s.student_id
+WHERE sr.exam_year=2021 AND sr.exam_session='Fall';
+
+
+Q8 — Join Query
+Write a Hive query to display student_name, course_name, marks for all students in the Computer Science department.
+
+1. USE education_db;
+
+CREATE TABLE IF NOT EXISTS courses (
+    course_id     STRING,
+    course_name   STRING,
+    credits       INT,
+    department    STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/TeacherDetail/courses';
+
+2. docker cp "C:\Users\User\Desktop\DDBMS Lab\course.csv" MyHadoop:/root/
+
+3. LOAD DATA LOCAL INPATH '/root/course.csv' INTO TABLE courses;
+
+4. SELECT 
+    s.student_name,
+    c.course_name,
+    sr.marks
+FROM student_results sr
+JOIN students s 
+    ON sr.student_id = s.student_id
+JOIN courses c 
+    ON sr.subject_code = CAST(c.course_id AS STRING)
+WHERE s.department = 'Computer Science';
+
+Q9 — Aggregation (Average Marks per Department)
+
+1. SELECT 
+    s.department,
+    AVG(sr.marks) AS avg_marks
+FROM student_results sr
+JOIN students s 
+ON sr.student_id = s.student_id
+WHERE sr.exam_year = 2024
+GROUP BY s.department;
+
+
+
+Q10 — Top Scorer in Spring 2024
+
+1. WITH max_marks_cte AS (
+    SELECT MAX(marks) AS max_marks
+    FROM student_results
+    WHERE exam_year = 2024 AND exam_session = 'Spring'
+)
+SELECT 
+    sr.student_id,
+    s.student_name,
+    sr.subject_code,
+    sr.marks
+FROM student_results sr
+JOIN max_marks_cte mm 
+    ON sr.marks = mm.max_marks
+JOIN students s 
+    ON sr.student_id = s.student_id
+WHERE sr.exam_year = 2024 AND sr.exam_session = 'Spring';
+
+
+
