@@ -79,7 +79,7 @@ Compile:
 6. jar cf wordcount.jar  WordCount*.class 
 
 Input-Output:
-7. echo "hadoop mapreduce hadoop hadoop bigdata bigdata spark" > input.txt
+7. echo "hadoop mapreduce oishe oishe bigdata bigdata spark" > input.txt
 8. hdfs dfs -mkdir -p /input
 9. hdfs dfs -put input.txt /input/
 10. hadoop jar wordcount.jar WordCount /input /output 

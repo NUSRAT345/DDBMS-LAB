@@ -1,4 +1,8 @@
 #localhost:9870
+# docker run hello-world
+# docker pull macio232/hadoop-pseudo-distributed-mode
+# docker run -p 9870:9870 -p 8088:8088 -it --name myHadoop macio232/hadoop-pseudo-distributed-mode /etc/bootstrap.sh -bash
+--------------------------------------------------------------------------
 # docker container start -i myHadoop
 
 3. hdfs dfs -ls /
