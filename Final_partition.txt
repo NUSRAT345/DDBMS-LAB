@@ -143,8 +143,7 @@ LOCATION '/TeacherDetail/courses';
     s.student_name,
     c.course_name,
     sr.marks
-FROM student_results sr
-JOIN students s 
+FROM student_results sr JOIN students s 
     ON sr.student_id = s.student_id
 JOIN courses c 
     ON sr.subject_code = CAST(c.course_id AS STRING)
@@ -175,8 +174,7 @@ SELECT
     s.student_name,
     sr.subject_code,
     sr.marks
-FROM student_results sr
-JOIN max_marks_cte mm 
+FROM student_results sr JOIN max_marks_cte mm 
     ON sr.marks = mm.max_marks
 JOIN students s 
     ON sr.student_id = s.student_id
