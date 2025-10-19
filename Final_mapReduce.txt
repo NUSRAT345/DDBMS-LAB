@@ -1,3 +1,4 @@
+###
 1. docker container start -i  myHadoop 
 
 2. mkdir data

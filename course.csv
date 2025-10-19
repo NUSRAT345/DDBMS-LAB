@@ -1,0 +1,100 @@
+C001,Programming Fundamentals,3,Computer Science
+C002,Data Structures,3,Computer Science
+C003,Algorithms,4,Computer Science
+C004,Database Systems,4,Computer Science
+C005,Operating Systems,4,Computer Science
+C006,Computer Architecture,3,Computer Science
+C007,Linear Algebra,3,Mathematics
+C008,Discrete Mathematics,3,Mathematics
+C009,Calculus I,3,Mathematics
+C010,Calculus II,3,Mathematics
+C011,Probability and Statistics,3,Mathematics
+C012,Complex Analysis,4,Mathematics
+C013,Modern Physics,3,Physics
+C014,Classical Mechanics,3,Physics
+C015,Optics,3,Physics
+C016,Computer Networks,3,Computer Science
+C017,Compiler Design,4,Computer Science
+C018,Web Technologies,3,Computer Science
+C019,Artificial Intelligence,4,Computer Science
+C020,Machine Learning,4,Computer Science
+C021,Deep Learning,4,Computer Science
+C022,Data Mining,4,Computer Science
+C023,Big Data Analytics,4,Computer Science
+C024,Quantum Physics,4,Physics
+C025,Thermodynamics,3,Physics
+C026,Electromagnetism,3,Physics
+C027,Nuclear Physics,4,Physics
+C028,Astrophysics,4,Physics
+C029,Digital Signal Processing,3,Computer Science
+C030,Microprocessor Systems,3,Computer Science
+C031,Quantum Mechanics,4,Physics
+C032,Linear Programming,3,Mathematics
+C033,Topology,3,Mathematics
+C034,Abstract Algebra,3,Mathematics
+C035,Real Analysis,3,Mathematics
+C036,Numerical Methods,3,Mathematics
+C037,Graph Theory,3,Mathematics
+C038,Combinatorics,3,Mathematics
+C039,Information Theory,3,Computer Science
+C040,Cloud Computing,4,Computer Science
+C041,Distributed Systems,4,Computer Science
+C042,Mobile Application Development,3,Computer Science
+C043,Software Engineering,3,Computer Science
+C044,Human Computer Interaction,3,Computer Science
+C045,Cyber Security,3,Computer Science
+C046,Computer Graphics,3,Computer Science
+C047,Artificial Intelligence Applications,4,Computer Science
+C048,Machine Perception,4,Computer Science
+C049,Digital Electronics,3,Physics
+C050,Semiconductor Devices,3,Physics
+C051,Bioinformatics,3,Computer Science
+C052,Network Security,3,Computer Science
+C053,Embedded Systems,3,Computer Science
+C054,Parallel Computing,4,Computer Science
+C055,Database Administration,3,Computer Science
+C056,Compiler Optimization,4,Computer Science
+C057,Statistical Methods,3,Mathematics
+C058,Mathematical Modelling,3,Mathematics
+C059,Fluid Mechanics,3,Physics
+C060,Atomic Physics,4,Physics
+C061,Geometrical Optics,3,Physics
+C062,Advanced Thermodynamics,4,Physics
+C063,Renewable Energy Physics,3,Physics
+C064,Analytical Mechanics,4,Physics
+C065,Stellar Dynamics,3,Physics
+C066,Environmental Physics,3,Physics
+C067,Advanced Quantum Mechanics,4,Physics
+C068,Signal Processing,3,Computer Science
+C069,Internet of Things,3,Computer Science
+C070,Data Visualization,3,Computer Science
+C071,Cloud Security,4,Computer Science
+C072,Operating System Design,4,Computer Science
+C073,Mobile Computing,3,Computer Science
+C074,Neural Networks,4,Computer Science
+C075,Image Processing,3,Computer Science
+C076,Reinforcement Learning,4,Computer Science
+C077,Advanced Statistics,3,Mathematics
+C078,Optimization Techniques,3,Mathematics
+C079,Matrix Theory,3,Mathematics
+C080,Number Theory,3,Mathematics
+C081,Partial Differential Equations,3,Mathematics
+C082,Probability Theory,3,Mathematics
+C083,Set Theory,3,Mathematics
+C084,Stochastic Processes,3,Mathematics
+C085,Vector Calculus,3,Mathematics
+C086,Topology II,3,Mathematics
+C087,Advanced Calculus,3,Mathematics
+C088,Statistical Physics,3,Physics
+C089,Optoelectronics,3,Physics
+C090,High Energy Physics,4,Physics
+C091,Condensed Matter Physics,4,Physics
+C092,Computational Physics,3,Physics
+C093,Mathematical Physics,3,Physics
+C094,Digital Communication,3,Computer Science
+C095,Computer Vision,4,Computer Science
+C096,Pattern Recognition,3,Computer Science
+C097,Speech Processing,3,Computer Science
+C098,Advanced Databases,4,Computer Science
+C099,Information Retrieval,3,Computer Science
+C100,Quantum Computing,4,Computer Science

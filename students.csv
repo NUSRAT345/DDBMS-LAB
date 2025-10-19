@@ -1,0 +1,101 @@
+id,name,dob,department
+1,Rahim,5/23/2001,Computer Science
+2,Karim,11/15/2000,Mathematics
+3,Ayesha,7/20/2001,Physics
+4,Nusrat,2/10/2002,Computer Science
+5,Farhan,9/14/2001,Mathematics
+6,Sadia,12/5/2000,Physics
+7,Tanvir,3/18/2001,Computer Science
+8,Mehzabin,1/30/2002,Chemistry
+9,Rafiq,8/22/2000,Mathematics
+10,Samina,11/11/2001,Physics
+11,Arif,4/15/2002,Computer Science
+12,Nadia,6/9/2001,Biology
+13,Sohel,10/28/2000,Mathematics
+14,Fatema,3/7/2002,Physics
+15,Jamil,12/25/2001,Computer Science
+16,Sabrina,7/19/2000,Chemistry
+17,Kamal,5/14/2002,Mathematics
+18,Rehana,2/8/2001,Physics
+19,Bashir,9/3/2000,Computer Science
+20,Tasnim,6/21/2002,Biology
+21,Moin,8/17/2001,Mathematics
+22,Sharmin,4/12/2000,Physics
+23,Hasan,7/29/2002,Computer Science
+24,Rokeya,1/6/2001,Chemistry
+25,Sajid,11/24/2000,Mathematics
+26,Lubna,8/13/2002,Physics
+27,Nazmul,4/2/2001,Computer Science
+28,Farzana,6/28/2000,Biology
+29,Akash,9/5/2002,Mathematics
+30,Shirin,10/31/2001,Physics
+31,Rashid,3/16/2000,Computer Science
+32,Nasrin,10/22/2002,Chemistry
+33,Shafiq,7/7/2001,Mathematics
+34,Mahmuda,5/1/2000,Physics
+35,Shahid,11/18/2002,Computer Science
+36,Parveen,9/26/2001,Biology
+37,Khalid,2/14/2000,Mathematics
+38,Shabnam,12/9/2002,Physics
+39,Morshed,8/4/2001,Computer Science
+40,Shamima,1/27/2000,Chemistry
+41,Anwar,1/15/2003,Mathematics
+42,Firoza,5/20/2001,Physics
+43,Jahangir,10/11/2000,Computer Science
+44,Shahnaz,2/28/2003,Biology
+45,Mizan,12/3/2001,Mathematics
+46,Sharmila,7/25/2000,Physics
+47,Nurul,3/12/2003,Computer Science
+48,Shahana,4/19/2001,Chemistry
+49,Azad,9/8/2000,Mathematics
+50,Razia,4/5/2003,Physics
+51,Mamun,11/30/2001,Computer Science
+52,Shaila,6/13/2000,Biology
+53,Abul,5/23/2003,Mathematics
+54,Shabnur,3/9/2001,Physics
+55,Babul,8/16/2000,Computer Science
+56,Shamim,6/14/2003,Chemistry
+57,Kader,2/1/2001,Mathematics
+58,Shahin,12/28/2000,Physics
+59,Matin,7/7/2003,Computer Science
+60,Shahnoor,7/12/2001,Biology
+61,Salam,4/4/2000,Mathematics
+62,Sharmeen,8/19/2003,Physics
+63,Jalal,10/25/2001,Computer Science
+64,Shahida,3/21/2000,Chemistry
+65,Ratan,9/2/2003,Mathematics
+66,Shapna,6/16/2001,Physics
+67,Mannan,11/7/2000,Computer Science
+68,Shamoli,10/11/2003,Biology
+69,Siraj,1/24/2001,Mathematics
+70,Shikha,5/18/2000,Physics
+71,Milon,11/25/2003,Computer Science
+72,Shuchanda,8/9/2001,Chemistry
+73,Khaled,2/3/2000,Mathematics
+74,Shumi,12/30/2003,Physics
+75,Morsalin,12/17/2001,Computer Science
+76,Shova,7/2/2000,Biology
+77,Nizam,1/8/2004,Mathematics
+78,Shanta,4/13/2001,Physics
+79,Robiul,9/26/2000,Computer Science
+80,Shathi,2/14/2004,Chemistry
+81,Sohrab,3/5/2001,Mathematics
+82,Shraboni,8/20/2000,Physics
+83,Mizanur,3/21/2004,Computer Science
+84,Sharmin,11/14/2001,Biology
+85,Rafique,1/9/2000,Mathematics
+86,Shirin,4/18/2004,Physics
+87,Motaleb,5/27/2001,Computer Science
+88,Shahnaz,10/30/2000,Chemistry
+89,Shahjahan,5/5/2004,Mathematics
+90,Shabnam,2/22/2001,Physics
+91,Mohiuddin,6/7/2000,Computer Science
+92,Shampa,6/12/2004,Biology
+93,Shamsul,9/19/2001,Mathematics
+94,Sharmila,4/1/2000,Physics
+95,Mujibur,7/28/2004,Computer Science
+96,Shahla,12/8/2001,Chemistry
+97,Saifuddin,3/15/2000,Mathematics
+98,Shikha,8/16/2004,Physics
+99,Mahbub,7/4/2001,Computer Science
+100,Shamima,11/27/2000,Biology
