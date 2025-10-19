@@ -1,4 +1,4 @@
-localhost:9870
+#localhost:9870
 # docker container start -i myHadoop
 
 3. hdfs dfs -ls /
